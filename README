@@ -1,0 +1,5 @@
+To compile an example go to one of the subdirectories and type: "make" or use Scons.
+
+Compilation needs Python, Boost program options and Boost Random. http://www.boost.org/
+
+For documentation: http://ttonteri.dynalias.org/programming/sse
