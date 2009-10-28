@@ -70,8 +70,10 @@ if Distutils:
 			env['CXXFLAGS']=env['CXXFLAGS'] + " -g -O0"
 			#env['CXXFLAGS']=env['CXXFLAGS'] + " -g -O1 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -ffast-math"
 
-		if (thisver >= ver42 and thisver < ver43):
-			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse"
+		if (thisver < ver42):
+			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -msse2"
+		elif (thisver >= ver42 and thisver < ver43):
+			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native"
 		elif (thisver >= ver43):
 			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native"
 		if (thisver >= ver42):
