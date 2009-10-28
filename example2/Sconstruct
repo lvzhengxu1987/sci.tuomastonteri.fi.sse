@@ -30,8 +30,14 @@ if system() == 'Windows':
 conf = Configure(env)
 
 if not conf.CheckLibWithHeader('boost_program_options', 'boost/program_options.hpp','c++'):
-        print "Boost Program_options is required!"
-        Exit(1)
+	if not conf.CheckLibWithHeader('boost_program_options', 'program_options.hpp','c++'):
+	        print "Boost Program_options is required!"
+	        Exit(1)
+
+if not conf.CheckHeader('boost/random.hpp',language='C++'):
+	if not conf.CheckHeader('random.hpp',language='C++'):
+	        print "Boost random is required!"
+		Exit(1)
 
 env = conf.Finish()
 
