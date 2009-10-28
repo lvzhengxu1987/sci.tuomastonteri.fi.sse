@@ -2,6 +2,4 @@ To compile an example go to one of the subdirectories and type: "make" or use Sc
 
 Compilation needs Python, Boost program options and Boost Random. http://www.boost.org/
 
-To compile with GCC earlier than 4.3.0 one needs to add for example "-msse2" for SSE2 to the command line.
-
 For documentation: http://ttonteri.dynalias.org/programming/sse
