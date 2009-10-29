@@ -10,6 +10,10 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
+#if VECLIB_SSE_VER<0x20
+#error Need at least SSE2 support
+#endif
+
 #define noinline __attribute__((noinline))
 #define finline  __attribute__((always_inline))
 

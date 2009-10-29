@@ -11,6 +11,10 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
+if VECLIB_SSE_VER<0x20
+#error Need at least SSE2 support
+#endif
+
 class Particle {
 public:
 vec3 pos;
