@@ -298,7 +298,7 @@ dir[2]=0.0f;
 float cosphi = 1.0f/sqrtf(2.0f); // cos(45 degrees) = 1/sqrt(2)
 float cosphi2 = cosphi*cosphi;
 
-Ran<float> gen(-0.1f,0.1f); // uniformly distributed between X,Y
+Ran<float> gen(-1,1); // uniformly distributed between X,Y
 
 //
 //	Create quads
