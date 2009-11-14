@@ -394,6 +394,14 @@ public:
       return(out);
    }
 
+   __inline__ base& operator[](int i)
+   {
+      return(i == 0 ? x : i == 1 ? y : z);
+   }
+   __inline__ const base& operator[](int i) const
+   {
+      return(i == 0 ? x : i == 1 ? y : z);
+   }
    base x, y, z;
 };
 template <class base>

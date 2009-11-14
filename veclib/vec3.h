@@ -57,7 +57,9 @@ public:
 		out.z=-z;
 		return out;
 	}
-	
+	INLINE base& operator[](int i) { return i==0?x:i==1?y:z; }
+	INLINE const base& operator[](int i) const { return i==0?x:i==1?y:z; }
+
 	base x,y,z;
 };
 
