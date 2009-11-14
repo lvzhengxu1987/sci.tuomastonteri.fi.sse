@@ -106,7 +106,7 @@ return output;
 // Veclib has no facility to touch elements in masks..
 inline void ToggleMaskOn(int pos, vec4b& mask)
 {
-   static int ftrue = 0xF0000000;
+   static int ftrue = 0xFFFFFFFF;
    float* fmask= (float*)&mask.m;
    memcpy((void*)&fmask[pos], (void*)&ftrue, 4);
    }

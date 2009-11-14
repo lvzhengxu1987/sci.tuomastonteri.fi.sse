@@ -17,6 +17,11 @@
 #include <boost/random.hpp>
 #include <fstream>
 
+#ifdef _MSC_VER
+typedef unsigned __int64 uint64_t;
+typedef __int64 int64_t;
+#endif
+
 typedef boost::mt19937 base_generator_type;
 //typedef boost::minstd_rand base_generator_type;
 //typedef boost::rand48 base_generator_type;
@@ -34,6 +39,10 @@ uint64_t GetSeed()
 }
 #elif _WIN32
 // TODO: Implement GetSeed() on Windows platform
+uint64_t GetSeed()
+{
+	return 1;
+}
 #endif
 
 /** Uniform distribution random numbers between 0 .. 1 using Boost. A wrapper over Boost::random. */

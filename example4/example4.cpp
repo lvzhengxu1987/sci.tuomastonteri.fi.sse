@@ -259,6 +259,9 @@ else
 	return false;
 }
 
+#ifdef _WIN32
+#undef main
+#endif
 int main(int argc, char *argv[])
 {
 //

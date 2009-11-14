@@ -47,6 +47,9 @@ noinline void normalize(std::vector<mat4x3>& data)
   }
 }
 
+#ifdef _WIN32
+#undef main
+#endif
 int main(int argc, char *argv[])
 {
 if (sizeof(float) != sizeof(int))

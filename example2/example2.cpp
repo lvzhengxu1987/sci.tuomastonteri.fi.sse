@@ -121,6 +121,9 @@ for (int n=0;n<4;n++)
 
 };
 
+#ifdef _WIN32
+#undef main
+#endif
 int main(int argc, char *argv[])
 {
 if (sizeof(float) != sizeof(int))
