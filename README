@@ -3,3 +3,8 @@ To compile an example go to one of the subdirectories and type: "make" or use Sc
 Compilation needs Python, Boost program options and Boost Random. http://www.boost.org/
 
 For documentation: http://ttonteri.dynalias.org/programming/sse
+
+---
+
+Compiling the example programs on x86 instead of x86-64 leads to a segfault, because the sse datatypes do not 
+maintain proper byte-alignment when inserted into std::vectors.
