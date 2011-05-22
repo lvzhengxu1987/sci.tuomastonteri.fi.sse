@@ -102,3 +102,5 @@ if debug:
 	env['LINKFLAGS']=env['LINKFLAGS'] + "-g" 
 
 env.Program(['example4.cpp'])
+
+print('---\nNOTE:\nRunning compiled example programs on x86 instead of x86-64 leads to a segfault, because the sse datatypes do not maintain proper byte-alignment when inserted into std::vectors.\n---\n')

@@ -6,5 +6,5 @@ For documentation: http://ttonteri.dynalias.org/programming/sse
 
 ---
 
-Compiling the example programs on x86 instead of x86-64 leads to a segfault, because the sse datatypes do not 
-maintain proper byte-alignment when inserted into std::vectors.
+Running compiled example programs on x86 instead of x86-64 leads to a segfault, because the sse datatypes do 
+not maintain proper byte-alignment when inserted into std::vectors.
