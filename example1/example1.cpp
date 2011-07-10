@@ -70,7 +70,7 @@ desc.add_options()
     ("datasize,d", po::value<int>(&datasize)->default_value(10000), "Datasize")
     ("repeats,r", po::value<int>(&repeats)->default_value(1), "Repeats")
     ("print,p", po::value<bool>(&print_output)->default_value(false), "Print data to files")
-    ("compare,c", po::value<bool>(&bitwise)->default_value(true), "Compare output bitwise")
+    ("compare,c", po::value<bool>(&bitwise)->default_value(false), "Compare output bitwise")
 ;
 
 po::variables_map vm;
