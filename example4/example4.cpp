@@ -1,10 +1,11 @@
 #include <vector>
 #include <iostream>
 #include <bitset>
+#include <random>
+#include <fstream>
 #include <iomanip>
 #include "./../sse.hpp"
-#include "./../ran.h"
-#include "./../x86timer.hpp"
+#include "./../timer.hpp"
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
@@ -301,7 +302,12 @@ dir[2]=0.0f;
 float cosphi = 1.0f/sqrtf(2.0f); // cos(45 degrees) = 1/sqrt(2)
 float cosphi2 = cosphi*cosphi;
 
-Ran<float> gen(-1,1); // uniformly distributed between X,Y
+std::random_device rd;
+if (seed == -1)
+        seed = rd();
+
+std::default_random_engine gen(seed);
+std::uniform_real_distribution<> dis(-1,1);
 
 //
 //	Create quads
@@ -340,14 +346,14 @@ for (int i=0;i<datasize;i++)
         float offsetx=0.0f;
         float offsety=0.0f;
 	
-	P[1][0]=offsetx-distance+gen();
-	P[2][0]=offsety-distance+gen();
-	P[1][1]=offsetx+distance+gen();
-	P[2][1]=offsety-distance+gen();
-	P[1][2]=offsetx-distance+gen();
-	P[2][2]=offsety+distance+gen();
-	P[1][3]=offsetx+distance+gen();
-	P[2][3]=offsety+distance+gen();
+	P[1][0]=offsetx-distance+dis(gen);
+	P[2][0]=offsety-distance+dis(gen);
+	P[1][1]=offsetx+distance+dis(gen);
+	P[2][1]=offsety-distance+dis(gen);
+	P[1][2]=offsetx-distance+dis(gen);
+	P[2][2]=offsety+distance+dis(gen);
+	P[1][3]=offsetx+distance+dis(gen);
+	P[2][3]=offsety+distance+dis(gen);
 
 	for (int i=0;i<4;i++)
 		{
@@ -381,7 +387,7 @@ for (int i=0;i<datasize;i++)
 //
 uint64_t tim=0;
 uint64_t tim2=0;
-x86timer t;
+timer t;
 
 t.start();
 for (int r=0;r<repeats;r++)
@@ -390,7 +396,7 @@ for (int r=0;r<repeats;r++)
 	for (int i=0;i<pointset.size();i++)
 		result[i] = ConeQuadIntersection(dir, pos, cosphi2, pointset[i]);
         }
-tim = t.stopc();
+tim = t.stop();
 
 t.start();
 for (int r=0;r<repeats;r++)
@@ -399,7 +405,7 @@ for (int r=0;r<repeats;r++)
 	for (int i=0;i<pointset2.size();i++)
 		result2[i] = ConeQuadIntersection(dir, pos, cosphi2, pointset2[i]);
         }
-tim2 = t.stopc();
+tim2 = t.stop();
 
 // Ensure results are identical
 if (bitwise)

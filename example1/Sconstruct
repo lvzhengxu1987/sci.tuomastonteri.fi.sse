@@ -59,6 +59,7 @@ if Distutils:
         if env['CXX'] == 'g++':
 		ver42 = version.StrictVersion('4.2.0')
 		ver43 = version.StrictVersion('4.3.0')
+		ver47 = version.StrictVersion('4.7.0')
 		thisver = version.StrictVersion( env['CXXVERSION'] )
 		env['CPPDEFINES'].append('GCC')
 
@@ -74,10 +75,12 @@ if Distutils:
 
 		if (thisver < ver42):
 			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -msse2"
-		elif (thisver >= ver42 and thisver < ver43):
-			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native"
-		elif (thisver >= ver43):
-			env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native"
+                elif (thisver >= ver42 and thisver < ver43):
+                        env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native"
+                elif (thisver >= ver43 and thisver < ver47):
+                        env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native -std=gnu++0x"
+                elif (thisver >= ver47):
+                        env['CXXFLAGS']=env['CXXFLAGS'] + "-mfpmath=sse -march=native -std=c++11"
 		if (thisver >= ver42):
 			if not debug:
 				if openmp and not profile:

@@ -2,12 +2,12 @@
 
 #include <iostream>
 #include <vector>
+#include <random>
 #include <iomanip>
 #include <bitset>
 #include <fstream>
-#include "./../x86timer.hpp"
+#include "./../timer.hpp"
 #include "./../sse.hpp"
-#include "./../ran.h"
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
@@ -169,7 +169,7 @@ if (datasize % 4 != 0)
 
 vec4 dt4 = vec4(dt);
 
-x86timer t;
+timer t;
 
 //
 //	Create identical datasets
@@ -177,9 +177,12 @@ x86timer t;
 std::vector<Particle> data1;
 std::vector<NParticle> data2;
 
+std::random_device rd;
 if (seed == -1)
-	seed = GetSeed();
-Ran01<float> gen(seed);
+	seed = rd();
+
+std::default_random_engine gen(seed);
+std::uniform_real_distribution<> dis(0,1);
 
 mat4x3 SSEpos,SSEvel;
 int counter=0;
@@ -187,13 +190,13 @@ for (int i=0;i<datasize;i++)
 	{
 	float maxrad=1.0f;
 	vec3 pos;
-	pos[0]=2.0f*maxrad*gen() - 1.0f;
-	pos[1]=2.0f*maxrad*gen() - 1.0f;
-	pos[2]=2.0f*maxrad*gen() - 1.0f;
+	pos[0]=2.0f*maxrad*dis(gen) - 1.0f;
+	pos[1]=2.0f*maxrad*dis(gen) - 1.0f;
+	pos[2]=2.0f*maxrad*dis(gen) - 1.0f;
 	vec3 vel;
-	vel[0]=velocity*gen();
-	vel[1]=velocity*gen();
-	vel[2]=velocity*gen();
+	vel[0]=velocity*dis(gen);
+	vel[1]=velocity*dis(gen);
+	vel[2]=velocity*dis(gen);
 
 	data1.push_back(Particle(pos,vel,mass));
 	
@@ -235,7 +238,7 @@ for (int r=0;r<iterations;r++)
 	        data1[i].pos += data1[i].vel*dt;
 		}
         }
-tim = t.stopc();
+tim = t.stop();
 
 t.start();
 for (int r=0;r<iterations;r++)
@@ -270,7 +273,7 @@ for (int r=0;r<iterations;r++)
 		}
 
         }
-tim2 = t.stopc();
+tim2 = t.stop();
 
 //
 //	Compare results bitwise NOTE: calculations performed in different order between paths!

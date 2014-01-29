@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <bitset>
 #include <fstream>
-#include "./../x86timer.hpp"
+#include "./../timer.hpp"
 #include "./../sse.hpp"
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
@@ -88,7 +88,7 @@ if (datasize % 4 != 0)
 	exit(0);
 	}
 
-x86timer t;
+timer t;
 
 //
 //	Create identical AOS datasets
@@ -131,7 +131,7 @@ for (int r=0;r<repeats;r++)
         //      1st benchmark code here
 	normalize(data1);
         }
-tim = t.stopc();
+tim = t.stop();
 
 t.start();
 for (int r=0;r<repeats;r++)
@@ -139,7 +139,7 @@ for (int r=0;r<repeats;r++)
         //      2nd benchmark code here
 	normalize(data2);
         }
-tim2 = t.stopc();
+tim2 = t.stop();
 
 //
 //	Compare results bitwise

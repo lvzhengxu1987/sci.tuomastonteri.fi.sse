@@ -1,9 +1,10 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include "./../sse.hpp"
-#include "./../ran.h"
-#include "./../x86timer.hpp"
+#include <random>
+#include "./../timer.hpp"
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
@@ -142,6 +143,13 @@ if (datasize % 4 != 0)
         exit(0);
         }
 
+std::random_device rd;
+if (seed == -1)
+        seed = rd();
+
+std::default_random_engine gen(seed);
+std::uniform_real_distribution<> dis(0,1);
+
 vec3 pos;
 pos[0]=10.0f;
 pos[1]=0.0f;
@@ -152,8 +160,6 @@ vec4b mask=vec4(1.0f) > vec4(0.0f);
 //ToggleMaskOff(0,mask);
 //ToggleMaskOff(1,mask);
 //ToggleMaskOff(2,mask);
-
-Ran01<float> gen;
 
 //
 //	Create data
@@ -183,12 +189,12 @@ int counter=0;
 for (int i=0;i<datasize;i++)
         {
 	vec3 raydir,rayorig;
-        raydir[0] = 5.0f + 5.0f*gen();
-        raydir[1] = 0.1f*gen();
-        raydir[2] = 0.1f*gen();
-        rayorig[0]= 0.1f*gen();
-        rayorig[1]= 0.1f*gen();
-        rayorig[2]= 0.1f*gen();
+        raydir[0] = 5.0f + 5.0f*dis(gen);
+        raydir[1] = 0.1f*dis(gen);
+        raydir[2] = 0.1f*dis(gen);
+        rayorig[0]= 0.1f*dis(gen);
+        rayorig[1]= 0.1f*dis(gen);
+        rayorig[2]= 0.1f*dis(gen);
         draydir.push_back(raydir);
         drayorig.push_back(rayorig);
         raydir2[0][counter]=raydir[0];
@@ -212,7 +218,7 @@ for (int i=0;i<datasize;i++)
 //
 uint64_t tim=0;
 uint64_t tim2=0;
-x86timer t;
+timer t;
 
 t.start();
 for (int r=0;r<repeats;r++)
@@ -221,7 +227,7 @@ for (int r=0;r<repeats;r++)
 	for (int i=0;i<draydir.size();i++)
 	        intersect(draydir[i], drayorig[i], pos, rad, hitpoint[i], distance[i], normal[i]);
         }
-tim = t.stopc();
+tim = t.stop();
 
 t.start();
 for (int r=0;r<repeats;r++)
@@ -234,7 +240,7 @@ for (int r=0;r<repeats;r++)
 	//if (!ForAll(hitmask))
 	//	std::cout << "not all hit!" << std::endl;
         }
-tim2 = t.stopc();
+tim2 = t.stop();
 
 if (print_output)
         {
